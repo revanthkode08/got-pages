@@ -82,16 +82,24 @@ const Hero = () => {
 
   // ─── Chapter transition ───────────────────────────────────────────────────
   const prevChapter = useRef(-1)
+  const transitionTl = useRef(null)
+  
   const transitionChapter = (idx) => {
     if (prevChapter.current === idx) return
     prevChapter.current = idx
     setActiveChapter(idx)
 
     const ch = CHAPTERS[idx]
-    const tl = gsap.timeline()
+    
+    // Kill the previous transition timeline if it's still running
+    if (transitionTl.current) {
+      transitionTl.current.kill()
+    }
+    
+    transitionTl.current = gsap.timeline()
 
     // fade out old text
-    tl.to([titleRef.current, subtitleRef.current, bodyRef.current, sigilRef.current], {
+    transitionTl.current.to([titleRef.current, subtitleRef.current, bodyRef.current, sigilRef.current], {
       y: -24, opacity: 0, duration: 0.35, ease: 'power2.in', stagger: 0.04,
     })
     // update DOM mid-fade via callback
@@ -112,7 +120,7 @@ const Hero = () => {
     if (chapterLabelRef.current) {
       gsap.fromTo(chapterLabelRef.current,
         { opacity: 0, x: 12 },
-        { opacity: 1, x: 0, duration: 0.4, ease: 'power2.out' }
+        { opacity: 1, x: 0, duration: 0.4, ease: 'power2.out', overwrite: 'auto' }
       )
       chapterLabelRef.current.textContent = `${String(idx + 1).padStart(2, '0')} / ${String(CHAPTERS.length).padStart(2, '0')}`
     }
