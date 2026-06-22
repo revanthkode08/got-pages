@@ -147,16 +147,6 @@ const Hero = () => {
     // Scroll distance = 5× viewport so we have plenty of room to scrub
     const scrollHeight = window.innerHeight * 6
 
-    // Pin the sticky wrapper
-    const pinTrigger = ScrollTrigger.create({
-      trigger: containerRef.current,
-      start:   'top top',
-      end:     `+=${scrollHeight}`,
-      pin:     stickyRef.current,
-      pinSpacing: true,
-      anticipatePin: 1,
-    })
-
     // Main scrub timeline — drives video time + rune bar
     const scrubTl = gsap.timeline({
       scrollTrigger: {
@@ -222,7 +212,6 @@ const Hero = () => {
 
     return () => {
       scrubTl.kill()
-      pinTrigger.kill()
       ScrollTrigger.getAll().forEach(t => t.kill())
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
