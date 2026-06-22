@@ -100,7 +100,7 @@ const Hero = () => {
 
     // fade out old text
     transitionTl.current.to([titleRef.current, subtitleRef.current, bodyRef.current, sigilRef.current], {
-      y: -24, opacity: 0, duration: 0.35, ease: 'power2.in', stagger: 0.04,
+      y: -16, opacity: 0, duration: 0.2, ease: 'power2.in', stagger: 0.03,
     })
     // update DOM mid-fade via callback
     .call(() => {
@@ -112,15 +112,15 @@ const Hero = () => {
     // fade in new text
     .fromTo(
       [sigilRef.current, subtitleRef.current, titleRef.current, bodyRef.current],
-      { y: 32, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.55, ease: 'power3.out', stagger: 0.07 }
+      { y: 24, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.4, ease: 'power3.out', stagger: 0.05 }
     )
 
     // chapter label
     if (chapterLabelRef.current) {
       gsap.fromTo(chapterLabelRef.current,
         { opacity: 0, x: 12 },
-        { opacity: 1, x: 0, duration: 0.4, ease: 'power2.out', overwrite: 'auto' }
+        { opacity: 1, x: 0, duration: 0.3, ease: 'power2.out', overwrite: 'auto' }
       )
       chapterLabelRef.current.textContent = `${String(idx + 1).padStart(2, '0')} / ${String(CHAPTERS.length).padStart(2, '0')}`
     }
@@ -171,7 +171,7 @@ const Hero = () => {
         trigger: containerRef.current,
         start:   'top top',
         end:     `+=${scrollHeight}`,
-        scrub:   1.2,
+        scrub:   0.25, // Significantly reduced delay from 1.2 to 0.25
         onUpdate: (self) => {
           // video scrub
           const t = self.progress * duration
