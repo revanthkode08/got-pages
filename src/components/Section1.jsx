@@ -107,11 +107,13 @@ const HouseCard = ({ house, index }) => {
     const obs = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setTimeout(() => el.classList.add('visible'), index * 120)
+          // Calculate delay based on column index (assuming 3 columns on desktop)
+          const delay = (index % 3) * 150
+          setTimeout(() => el.classList.add('visible'), delay)
           obs.disconnect()
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.1 }
     )
     obs.observe(el)
     return () => obs.disconnect()

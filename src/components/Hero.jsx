@@ -245,7 +245,6 @@ const Hero = () => {
       <div
         ref={containerRef}
         className="got-container"
-        style={{ height: `${window.innerHeight * 6 + window.innerHeight}px` }}
       >
         {/* ── Sticky viewport ── */}
         <div ref={stickyRef} className="got-sticky">
